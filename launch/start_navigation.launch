@@ -1,0 +1,4 @@
+<launch>
+  <!-- Start the corner navigation node -->
+  <node pkg="turtlebot3_exploration" type="corner_navigator.py" name="corner_navigator" output="screen"/>
+</launch>

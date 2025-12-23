@@ -1,0 +1,108 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="x_pos" default="0.5"/>
+  <arg name="y_pos" default="0.5"/>
+  <arg name="z_pos" default="0.0"/>
+
+  <!-- Launch Gazebo world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find turtlebot3_exploration)/worlds/square_room.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- Spawn TurtleBot3 -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+  
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"
+    args="-urdf -model turtlebot3_$(arg model) -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
+
+  <!-- TurtleBot3 state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+
+  <!-- Gmapping SLAM -->
+  <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+    <param name="base_frame" value="base_footprint"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="map_update_interval" value="2.0"/>
+    <param name="maxUrange" value="4.0"/>
+    <param name="maxRange" value="8.0"/>
+    <param name="sigma" value="0.05"/>
+    <param name="kernelSize" value="1"/>
+    <param name="lstep" value="0.05"/>
+    <param name="astep" value="0.05"/>
+    <param name="iterations" value="5"/>
+    <param name="lsigma" value="0.075"/>
+    <param name="ogain" value="3.0"/>
+    <param name="lskip" value="0"/>
+    <param name="minimumScore" value="100"/>
+    <param name="srr" value="0.01"/>
+    <param name="srt" value="0.02"/>
+    <param name="str" value="0.01"/>
+    <param name="stt" value="0.02"/>
+    <param name="linearUpdate" value="0.2"/>
+    <param name="angularUpdate" value="0.2"/>
+    <param name="temporalUpdate" value="0.5"/>
+    <param name="resampleThreshold" value="0.5"/>
+    <param name="particles" value="100"/>
+    <param name="xmin" value="-1.0"/>
+    <param name="ymin" value="-1.0"/>
+    <param name="xmax" value="6.0"/>
+    <param name="ymax" value="6.0"/>
+    <param name="delta" value="0.05"/>
+    <param name="llsamplerange" value="0.01"/>
+    <param name="llsamplestep" value="0.01"/>
+    <param name="lasamplerange" value="0.005"/>
+    <param name="lasamplestep" value="0.005"/>
+  </node>
+
+  <!-- Move Base with custom parameters -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+    
+    <!-- Load custom parameters if they exist, otherwise use defaults -->
+    <rosparam file="$(find turtlebot3_exploration)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turtlebot3_exploration)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find turtlebot3_exploration)/config/dwa_local_planner_params.yaml" command="load" />
+    
+    <!-- Global costmap -->
+    <param name="global_costmap/global_frame" value="map"/>
+    <param name="global_costmap/robot_base_frame" value="base_footprint"/>
+    <param name="global_costmap/update_frequency" value="2.0"/>
+    <param name="global_costmap/publish_frequency" value="1.0"/>
+    <param name="global_costmap/static_map" value="false"/>
+    <param name="global_costmap/rolling_window" value="true"/>
+    <param name="global_costmap/width" value="10.0"/>
+    <param name="global_costmap/height" value="10.0"/>
+    <param name="global_costmap/resolution" value="0.05"/>
+    
+    <!-- Local costmap -->
+    <param name="local_costmap/global_frame" value="odom"/>
+    <param name="local_costmap/robot_base_frame" value="base_footprint"/>
+    <param name="local_costmap/update_frequency" value="5.0"/>
+    <param name="local_costmap/publish_frequency" value="2.0"/>
+    <param name="local_costmap/static_map" value="false"/>
+    <param name="local_costmap/rolling_window" value="true"/>
+    <param name="local_costmap/width" value="3.0"/>
+    <param name="local_costmap/height" value="3.0"/>
+    <param name="local_costmap/resolution" value="0.05"/>
+    
+    <!-- Planner parameters -->
+    <param name="planner_frequency" value="1.0" />
+    <param name="planner_patience" value="5.0" />
+    <param name="controller_frequency" value="10.0" />
+    <param name="controller_patience" value="15.0" />
+    <param name="clearing_rotation_allowed" value="true" />
+  </node>
+
+  <!-- RViz -->
+  <node pkg="rviz" type="rviz" name="rviz" required="false"
+        args="-d $(find turtlebot3_exploration)/rviz/exploration.rviz"/>
+
+</launch>

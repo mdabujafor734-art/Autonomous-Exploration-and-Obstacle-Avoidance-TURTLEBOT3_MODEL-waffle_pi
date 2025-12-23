@@ -1,0 +1,48 @@
+================================================================================
+TurtleBot3 Autonomous Exploration - Waypoint Navigation Log
+================================================================================
+Start Time: 2025-12-23 16:32:39
+================================================================================
+
+Timestamp    | Waypoint Name                  | X (m)    | Y (m)    | Status         
+--------------------------------------------------------------------------------
+65.75        | Corner 1                       | 0.50     | 0.50     | Goal Sent       | Actual: (0.50, 0.50)
+65.86        | Corner 1                       | 0.50     | 0.50     | Reached         | Actual: (0.50, 0.50)
+67.87        | Corner 1                       | 0.50     | 0.50     | Pause Complete  | Actual: (0.50, 0.50)
+67.87        | Waypoint - Obstacle 1 Zone     | 0.80     | 1.50     | Goal Sent       | Actual: (0.50, 0.50)
+75.68        | Waypoint - Obstacle 1 Zone     | 0.80     | 1.50     | Reached         | Actual: (0.81, 1.39)
+76.18        | Waypoint - Obstacle 1 Zone     | 0.80     | 1.50     | Pause Complete  | Actual: (0.82, 1.39)
+76.19        | Corner 2                       | 0.50     | 4.50     | Goal Sent       | Actual: (0.82, 1.39)
+96.89        | Corner 2                       | 0.50     | 4.50     | Reached         | Actual: (0.54, 4.41)
+98.90        | Corner 2                       | 0.50     | 4.50     | Pause Complete  | Actual: (0.54, 4.41)
+98.90        | Waypoint - Obstacle 2 Zone     | 1.80     | 4.20     | Goal Sent       | Actual: (0.54, 4.41)
+105.41       | Waypoint - Obstacle 2 Zone     | 1.80     | 4.20     | Reached         | Actual: (1.66, 4.25)
+105.91       | Waypoint - Obstacle 2 Zone     | 1.80     | 4.20     | Pause Complete  | Actual: (1.66, 4.25)
+105.92       | Corner 3                       | 4.50     | 4.50     | Goal Sent       | Actual: (1.66, 4.25)
+126.52       | Corner 3                       | 4.50     | 4.50     | Reached         | Actual: (4.49, 4.46)
+128.53       | Corner 3                       | 4.50     | 4.50     | Pause Complete  | Actual: (4.49, 4.46)
+128.53       | Waypoint - Obstacle 3 Zone     | 4.20     | 3.50     | Goal Sent       | Actual: (4.49, 4.46)
+138.74       | Waypoint - Obstacle 3 Zone     | 4.20     | 3.50     | Reached         | Actual: (4.16, 3.69)
+139.24       | Waypoint - Obstacle 3 Zone     | 4.20     | 3.50     | Pause Complete  | Actual: (4.16, 3.69)
+139.25       | Corner 4                       | 4.50     | 0.50     | Goal Sent       | Actual: (4.16, 3.69)
+161.15       | Corner 4                       | 4.50     | 0.50     | Reached         | Actual: (4.43, 0.63)
+163.16       | Corner 4                       | 4.50     | 0.50     | Pause Complete  | Actual: (4.43, 0.63)
+163.16       | Waypoint - Obstacle 4 Zone     | 3.50     | 0.80     | Goal Sent       | Actual: (4.43, 0.63)
+167.86       | Waypoint - Obstacle 4 Zone     | 3.50     | 0.80     | Reached         | Actual: (3.60, 0.79)
+168.37       | Waypoint - Obstacle 4 Zone     | 3.50     | 0.80     | Pause Complete  | Actual: (3.60, 0.79)
+168.37       | Corner 1 (Return)              | 0.50     | 0.50     | Goal Sent       | Actual: (3.60, 0.79)
+190.08       | Corner 1 (Return)              | 0.50     | 0.50     | Reached         | Actual: (0.58, 0.61)
+192.08       | Corner 1 (Return)              | 0.50     | 0.50     | Pause Complete  | Actual: (0.58, 0.61)
+
+================================================================================
+NAVIGATION SUMMARY
+================================================================================
+End Time: 2025-12-23 16:34:51
+Total Waypoints: 9
+Successfully Reached: 9
+Failed: 0
+Success Rate: 100.0%
+Total Duration: 126.33 seconds
+================================================================================
+
+Shutdown initiated at: 2025-12-23 16:36:28
